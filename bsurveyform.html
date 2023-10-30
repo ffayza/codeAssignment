@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            background-color: #3498db;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 60%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-box {
+            padding: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input[type="text"],
+        select,
+        input[type="date"],
+        input[type="email"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+        }
+
+        input[type="checkbox"] {
+            margin: 5px;
+        }
+
+        button[type="submit"],
+        button[type="reset"] {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+        }
+
+        .close {
+            float: right;
+            cursor: pointer;
+        }
+
+        .gender-checkbox {
+            display: flex;
+            align-items: center;
+        }
+
+        .gender-label {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; color: white">Survey Form</h1>
+    <div class="container">
+        <div class="form-box">
+            <form id="surveyForm">
+                <div style="display: flex; justify-content: space-between;">
+                    <div style="width: 48%;">
+                        <label for="firstName">First Name:</label>
+                        <input type="text" id="firstName" required>
+                    </div>
+                    <div style="width: 48%;">
+                        <label for="lastName">Last Name:</label>
+                        <input type="text" id="lastName" required>
+                    </div>
+                </div>
+
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" required>
+
+                <label for="country">Country:</label>
+                <select id="country" required>
+                    <option value="INDIA">INDIA</option>
+                <option value="AUSTRALIA">AUSTRALIA</option>
+                <option value="CANADA">CANADA</option>
+                <option value="FRANCE">FRANCE</option>
+                <option value="IRAN">IRAN</option>
+                 <option value="KOREA">KOREA</option>
+                </select>
+
+                <label for="gender">Gender:</label>
+                <div class="gender-checkbox">
+                    <input type="checkbox" id="male" name="gender" value="Male">
+                    <label for="male">Male</label>
+                    <input type="checkbox" id="female" name="gender" value="Female">
+                    <label for="female">Female</label>
+                </div>
+
+                <label for="profession">Profession:</label>
+                <input type="text" id="profession" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+
+                <label for="mobile">Mobile Number:</label>
+                <input type="tel" id="mobile" required>
+           <br>
+                <button type="submit">Submit</button>
+                <button type="reset">Reset</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <span class="close" id="closePopup">&times;</span>
+            <h3>Survey Form Results:</h3>
+            <p>First Name: <span id="popupFirstName"></span></p>
+            <p>Last Name: <span id="popupLastName"></span></p>
+            <p>Date of Birth: <span id="popupDob"></span></p>
+            <p>Country: <span id="popupCountry"></span></p>
+            <p>Gender: <span id="popupGender"></span></p>
+            <p>Profession: <span id="popupProfession"></span></p>
+            <p>Email: <span id="popupEmail"></span></p>
+            <p>Mobile Number: <span id="popupMobile"></span></p>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById("surveyForm");
+        const popup = document.getElementById("popup");
+        const closePopup = document.getElementById("closePopup");
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            showPopup();
+                                                     }
+             );
+
+        form.addEventListener("reset", function () {
+            hidePopup();
+        }
+               );
+
+        closePopup.addEventListener("click", function () {
+            hidePopup();
+            form.reset();
+        }
+        );
+
+        function showPopup() {
+            const firstName = document.getElementById("firstName").value;
+            const lastName = document.getElementById("lastName").value;
+            const dob = document.getElementById("dob").value;
+            const country = document.getElementById("country").value;
+            const genderInputs = document.querySelectorAll('input[name="gender"]:checked');
+            const gender = Array.from(genderInputs).map(input => input.value).join(", ");
+            const profession = document.getElementById("profession").value;
+            const email = document.getElementById("email").value;
+            const mobile = document.getElementById("mobile").value;
+
+            document.getElementById("popupFirstName").textContent = firstName;
+            document.getElementById("popupLastName").textContent = lastName;
+            document.getElementById("popupDob").textContent = dob;
+            document.getElementById("popupCountry").textContent = country;
+            document.getElementById("popupGender").textContent = gender;
+            document.getElementById("popupProfession").textContent = profession;
+            document.getElementById("popupEmail").textContent = email;
+            document.getElementById("popupMobile").textContent = mobile;
+
+            popup.style.display = "block";
+        }
+
+        function hidePopup() {
+            popup.style.display = "none";
+        }
+    </script>
+</body>
+</html>
